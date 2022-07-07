@@ -22,8 +22,26 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
 
+
+function getLongestDinosaur(dinosaurs) {
+  
+  if (dinosaurs.length === 0){
+    return {}
+  }
+  
+  let longDinoName =dinosaurs[0].name
+  let longDino =dinosaurs[0].lengthInMeters
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if ( longDino < dinosaurs[i].lengthInMeters){
+      longDino= dinosaurs[i].lengthInMeters  ,
+      longDinoName = dinosaurs[i].name
+    } 
+  }
+  let obj= {[longDinoName]: longDino * 3.281}
+  return obj
+}
+// console.log(getLongestDinosaur(input))
 /**
  * getDinosaurDescription()
  * ---------------------
@@ -44,7 +62,24 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+
+
+function getDinosaurDescription(dinosaurs, id) {
+  
+  
+  let idDinoName = id
+   let longDino =dinosaurs[0].lengthInMeters
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].dinosaurId === idDinoName){
+      return `${dinosaurs[i].name} (${dinosaurs[i].pronunciation})\n${dinosaurs[i].info} It lived in the ${dinosaurs[i].period} period, over ${dinosaurs[i].mya[dinosaurs[i].mya.length-1]} million years ago.`
+    } 
+  }
+  
+  return `A dinosaur with an ID of '${id}' cannot be found.`
+  
+}
+
+// console.log(getDinosaurDescription(input, "U9vuZmgKwUr"))
 
 /**
  * getDinosaursAliveMya()
@@ -71,7 +106,40 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+
+//  const input = [
+//   // ...dinosaurs,
+//   {
+//     dinosaurId: "7ZJlPQZRL",
+//     name: "Tallosaurus",
+//     pronunciation: "TALL-o-SORE-us",
+//     meaningOfName: "Very tall dinosaur",
+//     diet: "herbivorous",
+//     lengthInMeters: 30,
+//     period: "Early Cretaceous",
+//     mya: [120, 110],
+//     info: "Not much is known about this dinosaur because it didn't exist.",
+//   },
+// ];
+
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+   let arr = []
+   let myaDinoName = mya
+   for (let i = 0; i < dinosaurs.length; i++) {
+
+     if (dinosaurs[i].mya <= myaDinoName){
+         arr.push(dinosaurs[i].dinosaurId)
+         
+         return arr
+  // for (let j = 0; j < dinosaurs[i].mya.length; j++) {
+    
+  }
+  }
+}
+
+
+
+// console.log(getDinosaursAliveMya(input,110),input[0].mya[input[0].mya.length-1] )
 
 module.exports = {
   getLongestDinosaur,
