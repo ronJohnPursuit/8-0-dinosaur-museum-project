@@ -123,19 +123,27 @@ function getDinosaurDescription(dinosaurs, id) {
 // ];
 
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-   let arr = []
-   let myaDinoName = mya
-   for (let i = 0; i < dinosaurs.length; i++) {
-
-     if (dinosaurs[i].mya <= myaDinoName){
-         arr.push(dinosaurs[i].dinosaurId)
-         
-         return arr
-  // for (let j = 0; j < dinosaurs[i].mya.length; j++) {
-    
-  }
+  let arr = []
+  for (let i = 0; i < dinosaurs.length; i++) {
+  if (dinosaurs[i].mya.length === 1){
+  if (mya === dinosaurs[i].mya[0] || mya+1 === dinosaurs[i].mya[0])
+     arr.push(dinosaurs[i].dinosaurId)
+  }  if (dinosaurs[i].mya.length === 2) {
+   if ((mya < dinosaurs[i].mya[0] && mya > dinosaurs[i].mya[1]) ){
+     arr.push(dinosaurs[i].dinosaurId)
   }
 }
+}
+return arr
+}
+  // // put length at line 130? why 
+  //      if (dinosaurs[i].mya <= myaDinoName){
+    //          arr.push(dinosaurs[i].dinosaurId)
+         
+//          return arr
+  // for (let j = 0; j < dinosaurs[i].mya.length; j++) {
+    
+
 
 
 

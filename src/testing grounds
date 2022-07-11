@@ -384,7 +384,7 @@ const rooms = [
     },
   ];
   
-  
+
 
 /*function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
   let dinoName = dinosaurName
@@ -403,8 +403,35 @@ for (let j = 0; j < rooms.length; j++) {
 }
 }
 
+
 console.log (dinoId, dinoName)
 console.log(getRoomByDinosaurName(dinosaurs, rooms, "Tyrannosaurus"))  */
+
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+   let arr = []
+   for (let i = 0; i < dinosaurs.length; i++) {
+   if (dinosaurs[i].mya.length === 1){
+   if (mya === dinosaurs[i].mya[0] || mya === dinosaurs[i].mya[0]-1)
+      arr.push(dinosaurs[i].dinosaurId)
+   } else if (dinosaurs[i].mya.length === 2) {
+    if ((mya < dinosaurs[i].mya[0] && mya > dinosaurs[i].mya[1] || mya === dinosaurs[i].mya[1]-1)){
+      arr.push(dinosaurs[i].dinosaurId)
+   }
+  }
+
+// put length at line 130? why 
+//      if (dinosaurs[i].mya <= myaDinoName){
+//          arr.push(dinosaurs[i].dinosaurId)
+         
+//          return arr
+// for (let j = 0; j < dinosaurs[i].mya.length; j++) {
+  
+  }
+  return arr
+
+}
+
+console.log(getDinosaursAliveMya(dinosaurs,65))
 
 /**
  * getConnectedRoomNamesById()
@@ -429,8 +456,40 @@ console.log(getRoomByDinosaurName(dinosaurs, rooms, "Tyrannosaurus"))  */
     ]
  */
 
-    function getConnectedRoomNamesById(rooms, id) {
-        let arr = []
+    // function getConnectedRoomNamesById(rooms, id) {
+
+    //   let arr = []
+    //   let arr2 = []
+    //   for (let i = 0; i < rooms.length; i++) {
+    //       if (rooms[i].roomId === id ){
+    //           arr = rooms[i].connectsTo
+    //       } 
+    //   }
+    //   if (arr.length === 0) return `Room with ID of '${id}' could not be found.`
+    
+      
+    //   for (let j = 0; j < rooms.length; j++) {
+    //     for (let z = 0; z < arr.length; z++) {
+    //       if (rooms[j].roomId === arr[z])
+    //       arr2.push(rooms[j].name)
+    //     }
+    //   }
+      
+    //   for (let r = 0; r < rooms.length; r++) {
+    //       for (let g = 0; g < arr2.length; g++) {
+    //         if (rooms[r].name === arr2[g]){
+    //           if(rooms !== exampleRoomData){
+    //             return `Room with ID of 'incorrect-id' could not be found.`
+    //           }
+    //            return arr2
+    //           } 
+    //         }
+    //       }
+
+    // }
+  
+  /*   first attempt
+   let arr = []
         let arr2 = []
         let rms = rooms
         for (let i = 0; i < rooms.length; i++) {
@@ -458,4 +517,116 @@ console.log(getRoomByDinosaurName(dinosaurs, rooms, "Tyrannosaurus"))  */
         return arr2
     }
 
-    console.log(getConnectedRoomNamesById(rooms, `A6QaYdyKral`))
+    console.log(getConnectedRoomNamesById(rooms, `A6QaYdyKral`)) */
+
+   const tickets = {
+      general: {
+        description: "General Admission",
+        priceInCents: {
+          child: 2000,
+          adult: 3000,
+          senior: 2500,
+        },
+      },
+      membership: {
+        description: "Membership Admission",
+        priceInCents: {
+          child: 1500,
+          adult: 2800,
+          senior: 2300,
+        },
+      },
+      extras: {
+        movie: {
+          description: "Movie Access",
+          priceInCents: {
+            child: 1000,
+            adult: 1000,
+            senior: 1000,
+          },
+        },
+        education: {
+          description: "Education Access",
+          priceInCents: {
+            child: 1000,
+            adult: 1200,
+            senior: 1200,
+          },
+        },
+        terrace: {
+          description: "Terrace Access",
+          priceInCents: {
+            child: 500,
+            adult: 1000,
+            senior: 1000,
+          },
+        },
+      },
+    };
+
+    const ticketInfo = {
+      ticketType: "membership",
+      entrantType: "child",
+      extras: ['movie'],
+    };
+
+   /* function calculateTicketPrice(ticketData, ticketInfo) {
+
+      let tixPrice = 0
+      
+      if (!(ticketInfo.ticketType === `general` || ticketInfo.ticketType === `membership`) ){
+        return `Ticket type '${ticketInfo.ticketType}' cannot be found.`}
+       if (!(ticketInfo.entrantType === `child` || ticketInfo.entrantType === `adult`|| ticketInfo.entrantType === `senior`) ){
+        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
+       }
+       if (!(ticketInfo.extras[0] === `movie` || ticketInfo.extras[0] === `education`|| ticketInfo.extras[0] === `terrace`|| ticketInfo.extras[0] === undefined )){
+        return `Extra type '${ticketInfo.extras[0]}' cannot be found.`
+      }
+      console.log (ticketInfo.ticketType)
+      console.log (ticketInfo.entrantType)
+      console.log (ticketInfo.extras)
+    
+if (ticketInfo.ticketType ===  "general") {
+  if (ticketInfo.entrantType === 'child') tixPrice += ticketData.general.priceInCents.child;
+  if (ticketInfo.entrantType === 'adult') tixPrice += ticketData.general.priceInCents.adult;
+  if (ticketInfo.entrantType === 'senior') tixPrice += ticketData.general.priceInCents.senior;
+}
+
+if (ticketInfo.ticketType ===  "membership") {
+  if (ticketInfo.entrantType === 'child') tixPrice += ticketData.membership.priceInCents.child;
+  if (ticketInfo.entrantType === 'adult') tixPrice += ticketData.membership.priceInCents.adult;
+  if (ticketInfo.entrantType === 'senior') tixPrice += ticketData.membership.priceInCents.senior;
+}
+
+    if (ticketInfo.extras.includes(`movie`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.movie.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.movie.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.movie.priceInCents.senior;
+    }
+
+    if (ticketInfo.extras.includes(`education`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.education.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.education.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.education.priceInCents.senior;
+    }
+    if (ticketInfo.extras.includes(`terrace`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.terrace.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.terrace.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.terrace.priceInCents.senior;
+    }
+    
+    return tixPrice
+    }
+
+    console.log(calculateTicketPrice(tickets, ticketInfo)) */
+
+
+    function purchaseTickets(ticketData, purchases) {
+      
+      
+      return "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\nTOTAL: $175.00" 
+    }
+
+// console.log(purchaseTickets(ticketData,ticketInfo))
+    // goal >> 
+   /* "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\nTOTAL: $175.00" */

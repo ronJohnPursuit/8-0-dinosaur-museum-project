@@ -54,7 +54,50 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+function calculateTicketPrice(ticketData, ticketInfo) {
+  let tixPrice = 0
+  if (!(ticketInfo.ticketType === `general` || ticketInfo.ticketType === `membership`) ){
+    return `Ticket type '${ticketInfo.ticketType}' cannot be found.`}
+   if (!(ticketInfo.entrantType === `child` || ticketInfo.entrantType === `adult`|| ticketInfo.entrantType === `senior`) ){
+    return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
+  }
+
+   if (!(ticketInfo.extras[0] === `movie` || ticketInfo.extras[0] === `education`|| ticketInfo.extras[0] === `terrace`|| ticketInfo.extras[0] === undefined )){
+    return `Extra type '${ticketInfo.extras[0]}' cannot be found.`
+  }
+
+if (ticketInfo.ticketType ===  "general") {
+  if (ticketInfo.entrantType === 'child') tixPrice += ticketData.general.priceInCents.child;
+  if (ticketInfo.entrantType === 'adult') tixPrice += ticketData.general.priceInCents.adult;
+  if (ticketInfo.entrantType === 'senior') tixPrice += ticketData.general.priceInCents.senior;
+}
+
+if (ticketInfo.ticketType ===  "membership") {
+  if (ticketInfo.entrantType === 'child') tixPrice += ticketData.membership.priceInCents.child;
+  if (ticketInfo.entrantType === 'adult') tixPrice += ticketData.membership.priceInCents.adult;
+  if (ticketInfo.entrantType === 'senior') tixPrice += ticketData.membership.priceInCents.senior;
+}
+
+    if (ticketInfo.extras.includes(`movie`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.movie.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.movie.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.movie.priceInCents.senior;
+    }
+
+    if (ticketInfo.extras.includes(`education`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.education.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.education.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.education.priceInCents.senior;
+    }
+    if (ticketInfo.extras.includes(`terrace`)) {
+      if (ticketInfo.entrantType === `child`) tixPrice += ticketData.extras.terrace.priceInCents.child;
+      if (ticketInfo.entrantType === `adult`) tixPrice += ticketData.extras.terrace.priceInCents.adult;
+      if (ticketInfo.entrantType === `senior`) tixPrice += ticketData.extras.terrace.priceInCents.senior;
+    }
+    
+    return tixPrice
+
+}
 
 /**
  * purchaseTickets()
@@ -109,7 +152,36 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  // var formatter = new Intl.NumberFormat('en-US', {
+  //   style: 'currency',
+  //   currency: 'USD',
+  
+  //   // These options are needed to round to whole numbers if that's what you want.
+  //   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  // });
+  
+  // formatter.format(tixPrice);
+  for (let i = 0; i < purchases.length; i++) {
+    if (typeof calculateTicketPrice(ticketData, purchases[i]) === "string"){
+       return calculateTicketPrice(ticketData, purchases[i])
+      // if (!(purchases.entrantType === `child` || purchases.entrantType === `adult`|| purchases.entrantType === `senior`) ){
+      //   return `Entrant type 'incorrect-entrant' cannot be found.`
+      // }
+      // if (!(purchases.ticketType === `general` || purchases.ticketType === `membership`) ){
+      //   return `Ticket type 'incorrect-type' cannot be found.`
+      // }
+    }
+  }
+  for (let i = 0; i < purchases.length; i++) {
+    if (typeof calculateTicketPrice(ticketData, purchases[i]) === "number"){
+       tixPrice = calculateTicketPrice(ticketData, purchases[i])
+      }
+    }
+  //  "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\nTOTAL: $175.00" 
+    return tixPrice
+}
 
 // Do not change anything below this line.
 module.exports = {
