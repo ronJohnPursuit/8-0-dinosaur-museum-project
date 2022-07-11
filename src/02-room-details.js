@@ -97,13 +97,16 @@ function getConnectedRoomNamesById(rooms, id) {
       arr2.push(rooms[j].name)
     }
   }
-  // need to change edge cas for "✓ if connected room ID is incorrect, should return an error message"
   for (let r = 0; r < rooms.length; r++) {
-      for (let g = 0; g < arr2.length; g++) {
-        if (rooms[r].name === arr2[g]){
-          if(rooms !== exampleRoomData){
-            return `Room with ID of 'incorrect-id' could not be found.`
-          }
+    for (let g = 0; g < arr2.length; g++) {
+      if (rooms[r].name === arr2[g]){
+        
+        // need to change edge cas for "✓ if connected room ID is incorrect, should return an error message"
+
+          // if(rooms !== exampleRoomData){
+          //   return `Room with ID of 'incorrect-id' could not be found.`
+          // }
+
            return arr2
           } 
         }

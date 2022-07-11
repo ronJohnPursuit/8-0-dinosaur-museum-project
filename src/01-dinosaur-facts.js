@@ -127,12 +127,26 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   for (let i = 0; i < dinosaurs.length; i++) {
   if (dinosaurs[i].mya.length === 1){
   if (mya === dinosaurs[i].mya[0] || mya+1 === dinosaurs[i].mya[0])
+  {
      arr.push(dinosaurs[i].dinosaurId)
+    }
   }  if (dinosaurs[i].mya.length === 2) {
-   if ((mya < dinosaurs[i].mya[0] && mya > dinosaurs[i].mya[1]) ){
+   if ((mya < dinosaurs[i].mya[0] && mya+1 > dinosaurs[i].mya[1]) )
+   {
      arr.push(dinosaurs[i].dinosaurId)
   }
 }
+}
+arr2=[]
+if (key){
+for (let d = 0; d < dinosaurs.length; d++) {
+ for (let j = 0; j < arr.length; j++) {
+  if (arr[j] === dinosaurs[d].dinosaurId) {
+    arr2.push(dinosaurs[d].name)
+  } 
+ }
+}  
+  return arr2
 }
 return arr
 }
