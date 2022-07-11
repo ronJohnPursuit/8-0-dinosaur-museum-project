@@ -153,16 +153,10 @@ if (ticketInfo.ticketType ===  "membership") {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
-  // var formatter = new Intl.NumberFormat('en-US', {
-  //   style: 'currency',
-  //   currency: 'USD',
-  
-  //   // These options are needed to round to whole numbers if that's what you want.
-  //   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  //   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-  // });
-  
-  // formatter.format(tixPrice);
+ let ageGroup = []
+ let tixType = []
+ let tixPrice = 0
+
   for (let i = 0; i < purchases.length; i++) {
     if (typeof calculateTicketPrice(ticketData, purchases[i]) === "string"){
        return calculateTicketPrice(ticketData, purchases[i])
@@ -176,13 +170,22 @@ function purchaseTickets(ticketData, purchases) {
   }
   for (let i = 0; i < purchases.length; i++) {
     if (typeof calculateTicketPrice(ticketData, purchases[i]) === "number"){
-       tixPrice = calculateTicketPrice(ticketData, purchases[i])
+       tixPrice += calculateTicketPrice(ticketData, purchases[i])
       }
+      ageGroup.push(purchases[i].entrantType.charAt(0).toUpperCase()+purchases[i].entrantType.slice(1)+purchases[i].ticketType.charAt(0).toUpperCase()+purchases[i].ticketType.slice(1) + ` Admission: ${calculateTicketPrice(ticketData, purchases[i])}`)
     }
-  //  "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\nTOTAL: $175.00" 
-    return tixPrice
-}
 
+    // for (let i = 0; i < purchases.length; i++) {
+    //   if (typeof calculateTicketPrice(ticketData, purchases[i]) === "number"){
+    //      tixPrice += calculateTicketPrice(ticketData, purchases[i])
+    //     }
+    //     tixType.push(purchases[i].ticketType)
+    //   }
+    //  "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\n`TOTAL: $${(tixPrice/100).toFixed(2)}`" 
+   
+    return ageGroup.join("\n")
+  }
+  
 // Do not change anything below this line.
 module.exports = {
   calculateTicketPrice,
