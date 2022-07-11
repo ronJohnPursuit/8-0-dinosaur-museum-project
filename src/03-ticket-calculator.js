@@ -154,7 +154,7 @@ if (ticketInfo.ticketType ===  "membership") {
  */
 function purchaseTickets(ticketData, purchases) {
  let ageGroup = []
- let tixType = []
+ let tixExtra = []
  let tixPrice = 0
 
   for (let i = 0; i < purchases.length; i++) {
@@ -172,18 +172,28 @@ function purchaseTickets(ticketData, purchases) {
     if (typeof calculateTicketPrice(ticketData, purchases[i]) === "number"){
        tixPrice += calculateTicketPrice(ticketData, purchases[i])
       }
-      ageGroup.push(purchases[i].entrantType.charAt(0).toUpperCase()+purchases[i].entrantType.slice(1)+purchases[i].ticketType.charAt(0).toUpperCase()+purchases[i].ticketType.slice(1) + ` Admission: ${calculateTicketPrice(ticketData, purchases[i])}`)
+    if (purchases[i].extras.length >0){  
+      tixExtra = purchases[i].extras
+      let tixExtra2 = [`${tixExtra[0].charAt(0).toUpperCase()+tixExtra[0].slice(1)} Access`]
+      for (let j = 1; j < tixExtra.length; j++) {
+       tixExtra2.push(` ${tixExtra[j].charAt(0).toUpperCase()+tixExtra[j].slice(1)} Access`)
+      }
+      
+      ageGroup.push(purchases[i].entrantType.charAt(0).toUpperCase()+purchases[i].entrantType.slice(1)+ " "+purchases[i].ticketType.charAt(0).toUpperCase()+purchases[i].ticketType.slice(1) + ` Admission: $${((calculateTicketPrice(ticketData, purchases[i])/100).toFixed(2))}`+` (${tixExtra2})`)
     }
-
+    else {
+      ageGroup.push(purchases[i].entrantType.charAt(0).toUpperCase()+purchases[i].entrantType.slice(1)+ " "+purchases[i].ticketType.charAt(0).toUpperCase()+purchases[i].ticketType.slice(1) + ` Admission: $${((calculateTicketPrice(ticketData, purchases[i])/100).toFixed(2))}`)
+    }
+    }
+    // (purchases[i].extras).join()
     // for (let i = 0; i < purchases.length; i++) {
     //   if (typeof calculateTicketPrice(ticketData, purchases[i]) === "number"){
     //      tixPrice += calculateTicketPrice(ticketData, purchases[i])
     //     }
     //     tixType.push(purchases[i].ticketType)
     //   }
-    //  "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\nAdult General Admission: $50.00 (Movie Access, Terrace Access)\nSenior General Admission: $35.00 (Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\nChild General Admission: $45.00 (Education Access, Movie Access, Terrace Access)\n-------------------------------------------\n`TOTAL: $${(tixPrice/100).toFixed(2)}`" 
+    return `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${ageGroup.join("\n")}\n-------------------------------------------\nTOTAL: $${(tixPrice/100).toFixed(2)}`
    
-    return ageGroup.join("\n")
   }
   
 // Do not change anything below this line.
